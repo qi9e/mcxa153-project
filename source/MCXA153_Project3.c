@@ -7,6 +7,8 @@
 #include "display.h"
 #include "gfx.h"
 #include "keypad.h"
+#include "boot_anim.h"
+#include "buzzer.h"
 
 #define SCAN_PERIOD_MS 5U
 
@@ -48,51 +50,26 @@ int main(void)
     BOARD_InitDebugConsole();
 
     Display_Init();
+    buzzer_init();
     GFX_Init();
     //KEYPAD_Init();
 
     GFX_Clear(0);
     GFX_Flush();
-    char input[20];
-    int input_len = 0;
-    char last_key = 0;
 
-    input[0] = '\0';
+    play_note(c1, 1.0f);
+   play_note(c2, 1.0f);
+   play_note(c3, 1.0f);
+   play_note(c4, 1.0f);
+   play_note(c5, 1.0f);
+   play_note(c6, 1.0f);
+   play_note(c7, 1.0f);
+   play_note(d1, 2.0f);
 
-    draw_screen(input, last_key);
+    BootAnimation_Run();
 
-    SysTick_Config(SystemCoreClock / 1000U * SCAN_PERIOD_MS);
-
-    while (1) {
-        if (!g_tick_flag) {
+        while (1) {
             __WFI();
-            continue;
         }
 
-        g_tick_flag = 0;
-
-        char k = KEYPAD_GetKey();
-
-        if (k != KEYPAD_NO_KEY) {
-            PRINTF("key=%c\r\n", k);
-
-            last_key = k;
-
-            if (k == 'B') {
-                input_len = 0;
-                input[0] = '\0';
-            } else if (k == 'D') {
-                input_len = 0;
-                input[0] = '\0';
-                last_key = 0;
-            } else {
-                if (input_len < 19) {
-                    input[input_len++] = k;
-                    input[input_len] = '\0';
-                }
-            }
-
-            draw_screen(input, last_key);
-        }
-    }
 }

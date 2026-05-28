@@ -1,5 +1,5 @@
-source/MCXA153_Project3.o source/MCXA153_Project3.d: \
- ../source/MCXA153_Project3.c \
+drivers/fsl_ctimer.o drivers/fsl_ctimer.d: ../drivers/fsl_ctimer.c \
+ ../drivers/fsl_ctimer.h ../drivers/fsl_common.h \
  D:\ProgramData\MCUX\MCXA153_Project3\device/fsl_device_registers.h \
  D:\ProgramData\MCUX\MCXA153_Project3\device/MCXA153.h \
  D:\ProgramData\MCUX\MCXA153_Project3\device\periph/PERI_ADC.h \
@@ -47,22 +47,10 @@ source/MCXA153_Project3.o source/MCXA153_Project3.d: \
  D:\ProgramData\MCUX\MCXA153_Project3\device\periph/PERI_WAKETIMER.h \
  D:\ProgramData\MCUX\MCXA153_Project3\device\periph/PERI_WUU.h \
  D:\ProgramData\MCUX\MCXA153_Project3\device\periph/PERI_WWDT.h \
- D:\ProgramData\MCUX\MCXA153_Project3\board/pin_mux.h \
- D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_common.h \
- D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_common_arm.h \
- D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_clock.h \
- D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_common.h \
- D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_reset.h \
- D:\ProgramData\MCUX\MCXA153_Project3\board/clock_config.h \
- D:\ProgramData\MCUX\MCXA153_Project3\board/board.h \
- D:\ProgramData\MCUX\MCXA153_Project3\board/clock_config.h \
- D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_gpio.h \
- D:\ProgramData\MCUX\MCXA153_Project3\utilities\debug_console/fsl_debug_console.h \
- D:\ProgramData\MCUX\MCXA153_Project3\component\serial_manager/fsl_component_serial_manager.h \
- D:\ProgramData\MCUX\MCXA153_Project3\component\serial_manager/fsl_component_serial_port_uart.h \
- D:\ProgramData\MCUX\MCXA153_Project3\component\uart/fsl_adapter_uart.h \
- ../source/display.h ../source/gfx.h ../source/keypad.h \
- ../source/boot_anim.h ../source/buzzer.h
+ ../drivers/fsl_common_arm.h ../drivers/fsl_clock.h \
+ ../drivers/fsl_reset.h
+../drivers/fsl_ctimer.h:
+../drivers/fsl_common.h:
 D:\ProgramData\MCUX\MCXA153_Project3\device/fsl_device_registers.h:
 D:\ProgramData\MCUX\MCXA153_Project3\device/MCXA153.h:
 D:\ProgramData\MCUX\MCXA153_Project3\device\periph/PERI_ADC.h:
@@ -110,22 +98,6 @@ D:\ProgramData\MCUX\MCXA153_Project3\device\periph/PERI_VBAT.h:
 D:\ProgramData\MCUX\MCXA153_Project3\device\periph/PERI_WAKETIMER.h:
 D:\ProgramData\MCUX\MCXA153_Project3\device\periph/PERI_WUU.h:
 D:\ProgramData\MCUX\MCXA153_Project3\device\periph/PERI_WWDT.h:
-D:\ProgramData\MCUX\MCXA153_Project3\board/pin_mux.h:
-D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_common.h:
-D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_common_arm.h:
-D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_clock.h:
-D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_common.h:
-D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_reset.h:
-D:\ProgramData\MCUX\MCXA153_Project3\board/clock_config.h:
-D:\ProgramData\MCUX\MCXA153_Project3\board/board.h:
-D:\ProgramData\MCUX\MCXA153_Project3\board/clock_config.h:
-D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_gpio.h:
-D:\ProgramData\MCUX\MCXA153_Project3\utilities\debug_console/fsl_debug_console.h:
-D:\ProgramData\MCUX\MCXA153_Project3\component\serial_manager/fsl_component_serial_manager.h:
-D:\ProgramData\MCUX\MCXA153_Project3\component\serial_manager/fsl_component_serial_port_uart.h:
-D:\ProgramData\MCUX\MCXA153_Project3\component\uart/fsl_adapter_uart.h:
-../source/display.h:
-../source/gfx.h:
-../source/keypad.h:
-../source/boot_anim.h:
-../source/buzzer.h:
+../drivers/fsl_common_arm.h:
+../drivers/fsl_clock.h:
+../drivers/fsl_reset.h:

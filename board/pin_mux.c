@@ -140,6 +140,10 @@ void BOARD_InitPins(void)
     const gpio_pin_config_t out_low  = { kGPIO_DigitalOutput, 0 };
     const gpio_pin_config_t in_cfg   = { kGPIO_DigitalInput,  0 };
 
+    /* ====== 9. Buzzer 引脚 (P3_8, GPIO 输出, 由 CTIMER 中断翻转) ====== */
+	PORT_SetPinConfig(PORT3, 8U, &gpio_out_cfg);
+	GPIO_PinInit(GPIO3, 8U, &out_low);
+
     /* TFT 控制线初始电平: CS/RST 高电平待命, DC 高 */
     GPIO_PinInit(GPIO3, 15U, &out_high);   /* CS  */
     GPIO_PinInit(GPIO3, 14U, &out_high);   /* RST */
