@@ -221,13 +221,14 @@ bool tetris_input(char input) {
 const int INPUT_DEBOUNCE = 10;
 
 bool tetris_update(char input) {
+    begin_next_note();
     tetris_draw();
-    play_next_note();
 	current_time = nframes;
 	if (current_time - last_time > 10) {
 		last_time = current_time;
 		points += tetris_tick() * level;
 	}
+    end_note();
 	nframes++;
 }
 

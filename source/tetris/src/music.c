@@ -27,8 +27,12 @@ const int size = sizeof(melody) / sizeof(melody[0]);
 
 int current_note = 0;
 
-void play_next_note() {
-  uint32_t duration_ms = (60000UL * lead_times[current_note]) / (BPM);
-  play_note_ms_nodelay(melody[current_note], duration_ms);
+void begin_next_note() {
+  begin_note(melody[current_note]);
+}
+
+void end_note() {
+  end_note();
   current_note = (current_note + 1) % size;
 }
+
