@@ -45,15 +45,20 @@ void buzzer_init(void)
 void buzzer_silent(void)
 {
     CTIMER_StopTimer(BUZZER_CTIMER);
+    BUZZER_CTIMER->TCR |=  CTIMER_TCR_CRST_MASK;
+    BUZZER_CTIMER->TCR &= ~CTIMER_TCR_CRST_MASK;
     GPIO_PinWrite(BUZZER_GPIO, BUZZER_PIN, 0);
 }
 
 void buzzer_tone_set(uint32_t freq_hz)
 {
-    if (freq_hz == 0U) {
-        buzzer_silent();
-        return;
-    }
+    if (freq_hz == 0U) { buzzer_silent(); return; }
+
+    /* 关键：清掉上一首留下的 TC */
+    CTIMER_StopTimer(BUZZER_CTIMER);
+    BUZZER_CTIMER->TCR |=  CTIMER_TCR_CRST_MASK;   /* hold reset */
+    BUZZER_CTIMER->TCR &= ~CTIMER_TCR_CRST_MASK;   /* release    */
+
     uint32_t match = (BUZZER_CTIMER_CLK_HZ / (2U * freq_hz)) - 1U;
     ctimer_match_config_t mc = {
         .matchValue         = match,
@@ -72,6 +77,19 @@ void play_note(uint32_t freq_hz, float beats)
 {
     uint32_t dur_ms = (uint32_t)(beats * BEAT_MS);
     if (freq_hz == 0U || beats <= 0.0f) {
+        buzzer_silent();
+        if (dur_ms) delay_ms(dur_ms);
+        return;
+    }
+    buzzer_tone_set(freq_hz);
+    delay_ms(dur_ms);
+    buzzer_silent();
+    delay_ms(15);
+}
+
+void play_note_ms(uint32_t freq_hz, int dur_ms)
+{
+    if (freq_hz == 0U || dur_ms <= 0) {
         buzzer_silent();
         if (dur_ms) delay_ms(dur_ms);
         return;

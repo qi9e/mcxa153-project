@@ -21,6 +21,7 @@ component/uart \
 device \
 drivers \
 source \
+source/tetris/src \
 startup \
 utilities/debug_console \
 utilities \
