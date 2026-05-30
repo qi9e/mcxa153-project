@@ -31,7 +31,7 @@ void begin_next_note() {
   begin_note(melody[current_note]);
 }
 
-void end_note() {
+void finish_note() {
   end_note();
   current_note = (current_note + 1) % size;
 }
