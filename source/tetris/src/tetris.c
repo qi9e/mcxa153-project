@@ -5,7 +5,8 @@
 #include "gfx.h"
 
 #include <stdlib.h>
-#include <stdio.h>
+
+#include "music.h"
 
 #define WIDTH 10
 #define HEIGHT 20
@@ -220,7 +221,8 @@ bool tetris_input(char input) {
 const int INPUT_DEBOUNCE = 10;
 
 bool tetris_update(char input) {
-	tetris_draw();
+    tetris_draw();
+    play_next_note();
 	current_time = nframes;
 	if (current_time - last_time > 10) {
 		last_time = current_time;

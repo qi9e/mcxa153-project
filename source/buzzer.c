@@ -87,7 +87,7 @@ void play_note(uint32_t freq_hz, float beats)
     delay_ms(15);
 }
 
-void play_note_ms(uint32_t freq_hz, int dur_ms)
+void play_note_ms_nodelay(uint32_t freq_hz, int dur_ms)
 {
     if (freq_hz == 0U || dur_ms <= 0) {
         buzzer_silent();
@@ -97,5 +97,4 @@ void play_note_ms(uint32_t freq_hz, int dur_ms)
     buzzer_tone_set(freq_hz);
     delay_ms(dur_ms);
     buzzer_silent();
-    delay_ms(15);
 }
