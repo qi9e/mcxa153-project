@@ -4,14 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../source/tetris/src/music.c \
 ../source/tetris/src/tetris.c \
 ../source/tetris/src/tetronimo.c 
 
 C_DEPS += \
+./source/tetris/src/music.d \
 ./source/tetris/src/tetris.d \
 ./source/tetris/src/tetronimo.d 
 
 OBJS += \
+./source/tetris/src/music.o \
 ./source/tetris/src/tetris.o \
 ./source/tetris/src/tetronimo.o 
 
@@ -28,7 +31,7 @@ source/tetris/src/%.o: ../source/tetris/src/%.c source/tetris/src/subdir.mk
 clean: clean-source-2f-tetris-2f-src
 
 clean-source-2f-tetris-2f-src:
-	-$(RM) ./source/tetris/src/tetris.d ./source/tetris/src/tetris.o ./source/tetris/src/tetronimo.d ./source/tetris/src/tetronimo.o
+	-$(RM) ./source/tetris/src/music.d ./source/tetris/src/music.o ./source/tetris/src/tetris.d ./source/tetris/src/tetris.o ./source/tetris/src/tetronimo.d ./source/tetris/src/tetronimo.o
 
 .PHONY: clean-source-2f-tetris-2f-src
 

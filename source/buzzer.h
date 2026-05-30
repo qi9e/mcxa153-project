@@ -41,6 +41,7 @@ void play_note(uint32_t freq_hz, float beats);
 void buzzer_silent(void);
 void buzzer_tone_set(uint32_t freq_hz);   /* non-blocking: 设了就响, 自己用 buzzer_silent() 停 */
 void play_note_ms(uint32_t freq_hz, int dur_ms);
+void play_note_ms_nodelay(uint32_t freq_hz, int dur_ms);
 
 
 

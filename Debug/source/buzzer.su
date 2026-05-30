@@ -10,4 +10,4 @@ D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_gpio.h:404:20:GPIO_PortToggle	1
 ../source/buzzer.c:45:6:buzzer_silent	8	static
 ../source/buzzer.c:53:6:buzzer_tone_set	32	static
 ../source/buzzer.c:76:6:play_note	24	static
-../source/buzzer.c:90:6:play_note_ms	16	static
+../source/buzzer.c:90:6:play_note_ms_nodelay	16	static
