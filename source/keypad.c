@@ -1,5 +1,8 @@
 /*
- * keypad.c - 4x4 软膜键盘扫描驱动 (MCXA153)
+ * keypad.c
+ *
+ *  Created on: 2026年4月31日
+ *      Author: dani
  */
 
 #include "keypad.h"

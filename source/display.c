@@ -13,10 +13,7 @@
 #define PIN_DC_GPIO   GPIO2
 #define PIN_DC_NUM    6U
 
-/* ============== SPI 选择 ==============
- * 根据你 P2_13/P2_16 在 Config Tools 里能选到哪个 LPSPI 实例，
- * 把下面改成 LPSPI0 或 LPSPI1。
- */
+/* ============== SPI 配置 ============== */
 
 #define DISPLAY_SPI            LPSPI1                            /* 原 LPSPI0 */
 #define DISPLAY_SPI_CLK_FREQ   CLOCK_GetLpspiClkFreq(1U)         /* 原 0U */

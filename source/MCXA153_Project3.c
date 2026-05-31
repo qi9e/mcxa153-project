@@ -64,6 +64,8 @@ int main(void)
     GFX_Clear(0);
     GFX_Flush();
 
+    BootAnimation_Run();
+
     tetris_init();
 
     while(1){

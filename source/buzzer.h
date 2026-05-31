@@ -1,10 +1,9 @@
 /*
- * buzzer.h  —  CTIMER0 硬件 PWM 蜂鸣器驱动
+ * buzzer.h
  *
- * 引脚: P3_12 (CTIMER0_MAT0 输出)
- * 模式: 硬件 PWM, 50% 占空比方波, 无中断
+ *  Created on: 2026年5月23日
+ *      Author: dani
  */
-
 #ifndef BUZZER_H
 #define BUZZER_H
 
