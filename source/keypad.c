@@ -79,6 +79,8 @@ static const pin_def_t col_pins[4] = {
 /* ---------- 初始化 ---------- */
 void KEYPAD_Init(void)
 {
+	// cometar todos los reset
+
     CLOCK_EnableClock(kCLOCK_GatePORT1);
     //CLOCK_EnableClock(kCLOCK_GatePORT2);
     //CLOCK_EnableClock(kCLOCK_GatePORT3);
@@ -86,11 +88,11 @@ void KEYPAD_Init(void)
     //CLOCK_EnableClock(kCLOCK_GateGPIO2);
     //CLOCK_EnableClock(kCLOCK_GateGPIO3);
     /* MCXA153 必须先释放外设 reset, 否则写寄存器触发 BusFault */
-	RESET_PeripheralReset(kPORT1_RST_SHIFT_RSTn);
-	RESET_PeripheralReset(kPORT2_RST_SHIFT_RSTn);
+	//RESET_PeripheralReset(kPORT1_RST_SHIFT_RSTn);
+	//RESET_PeripheralReset(kPORT2_RST_SHIFT_RSTn);
 	//RESET_PeripheralReset(kPORT3_RST_SHIFT_RSTn);
-	RESET_PeripheralReset(kGPIO1_RST_SHIFT_RSTn);
-	RESET_PeripheralReset(kGPIO2_RST_SHIFT_RSTn);
+	//RESET_PeripheralReset(kGPIO1_RST_SHIFT_RSTn);
+	//RESET_PeripheralReset(kGPIO2_RST_SHIFT_RSTn);
 	//RESET_PeripheralReset(kGPIO3_RST_SHIFT_RSTn);
 
     /* 行: 推挽输出, 默认高 */

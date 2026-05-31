@@ -56,28 +56,23 @@ int main(void)
     Display_Init();
     buzzer_init();
     GFX_Init();
-    //KEYPAD_Init();
+    KEYPAD_Init();
+    SysTick_Config(SystemCoreClock / 200);
 
     GFX_Clear(0);
     GFX_Flush();
 
-    //BootAnimation_Run();
-
     tetris_init();
 
     while(1){
-    	KEYPAD_Scan();
-    	char input = KEYPAD_GetKey();
+        char input = KEYPAD_GetKey();
 
+        GFX_Clear(0);
+        tetris_update(0);
+        GFX_Flush();
 
-    	GFX_Clear(0);
-    	tetris_update(0);
-    	GFX_Flush();
-
-    	if ( input != KEYPAD_NO_KEY)
-    	{
-    		tetris_input(input);
-    	}
-
+        if (input != KEYPAD_NO_KEY) {
+            tetris_input(input);
+        }
     }
 }

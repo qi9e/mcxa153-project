@@ -83,8 +83,8 @@ void play_note(uint32_t freq_hz, float beats)
     }
     buzzer_tone_set(freq_hz);
     delay_ms(dur_ms);
-    buzzer_silent();
-    delay_ms(15);
+    //buzzer_silent();
+    //delay_ms(15);
 }
 
 void begin_note(uint32_t freq_hz)

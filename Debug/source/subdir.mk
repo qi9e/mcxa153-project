@@ -11,7 +11,8 @@ C_SRCS += \
 ../source/game.c \
 ../source/gfx.c \
 ../source/keypad.c \
-../source/semihost_hardfault.c 
+../source/semihost_hardfault.c \
+../source/systemUI.c 
 
 C_DEPS += \
 ./source/MCXA153_Project3.d \
@@ -21,7 +22,8 @@ C_DEPS += \
 ./source/game.d \
 ./source/gfx.d \
 ./source/keypad.d \
-./source/semihost_hardfault.d 
+./source/semihost_hardfault.d \
+./source/systemUI.d 
 
 OBJS += \
 ./source/MCXA153_Project3.o \
@@ -31,7 +33,8 @@ OBJS += \
 ./source/game.o \
 ./source/gfx.o \
 ./source/keypad.o \
-./source/semihost_hardfault.o 
+./source/semihost_hardfault.o \
+./source/systemUI.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -46,7 +49,7 @@ source/%.o: ../source/%.c source/subdir.mk
 clean: clean-source
 
 clean-source:
-	-$(RM) ./source/MCXA153_Project3.d ./source/MCXA153_Project3.o ./source/boot_anim.d ./source/boot_anim.o ./source/buzzer.d ./source/buzzer.o ./source/display.d ./source/display.o ./source/game.d ./source/game.o ./source/gfx.d ./source/gfx.o ./source/keypad.d ./source/keypad.o ./source/semihost_hardfault.d ./source/semihost_hardfault.o
+	-$(RM) ./source/MCXA153_Project3.d ./source/MCXA153_Project3.o ./source/boot_anim.d ./source/boot_anim.o ./source/buzzer.d ./source/buzzer.o ./source/display.d ./source/display.o ./source/game.d ./source/game.o ./source/gfx.d ./source/gfx.o ./source/keypad.d ./source/keypad.o ./source/semihost_hardfault.d ./source/semihost_hardfault.o ./source/systemUI.d ./source/systemUI.o
 
 .PHONY: clean-source
 

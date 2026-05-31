@@ -10,5 +10,5 @@
 ../source/tetris/src/tetris.c:178:13:piece_rotate	16	static
 ../source/tetris/src/tetris.c:186:13:board_init	16	static
 ../source/tetris/src/tetris.c:194:6:tetris_init	8	static
-../source/tetris/src/tetris.c:206:6:tetris_input	16	static
-../source/tetris/src/tetris.c:223:6:tetris_update	16	static
+../source/tetris/src/tetris.c:207:6:tetris_input	16	static
+../source/tetris/src/tetris.c:224:6:tetris_update	16	static

@@ -3,5 +3,5 @@ D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_gpio.h:345:20:GPIO_PinWrite	24	
 D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_gpio.h:427:24:GPIO_PinRead	16	static
 D:\ProgramData\MCUX\MCXA153_Project3\drivers/fsl_port.h:360:20:PORT_SetPinConfig	32	static
 ../source/keypad.c:80:6:KEYPAD_Init	40	static
-../source/keypad.c:145:6:KEYPAD_Scan	48	static
-../source/keypad.c:188:6:KEYPAD_GetKey	16	static
+../source/keypad.c:147:6:KEYPAD_Scan	48	static
+../source/keypad.c:190:6:KEYPAD_GetKey	16	static

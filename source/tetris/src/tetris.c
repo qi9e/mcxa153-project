@@ -202,6 +202,7 @@ unsigned int last_time = 0;
 unsigned int current_time = 0;
 int points = 0;
 int level = 1;
+unsigned int last_music = 0;
 
 bool tetris_input(char input) {
 	if (input == '1') {
@@ -221,14 +222,14 @@ bool tetris_input(char input) {
 const int INPUT_DEBOUNCE = 10;
 
 bool tetris_update(char input) {
-    begin_next_note();
+
     tetris_draw();
 	current_time = nframes;
-	if (current_time - last_time > 10) {
+	if (current_time - last_time > 5 ||input) {
 		last_time = current_time;
 		points += tetris_tick() * level;
 	}
-    end_note();
+	begin_next_note();
 	nframes++;
 }
 

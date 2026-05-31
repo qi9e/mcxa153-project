@@ -1,1 +1,1 @@
-../source/tetris/src/music.c:30:6:play_next_note	16	static
+../source/tetris/src/music.c:30:6:begin_next_note	16	static

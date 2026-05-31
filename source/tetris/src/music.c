@@ -28,11 +28,9 @@ const int size = sizeof(melody) / sizeof(melody[0]);
 int current_note = 0;
 
 void begin_next_note() {
-  begin_note(melody[current_note]);
-}
-
-void finish_note() {
-  end_note();
+  play_note(melody[current_note], lead_times[current_note]);
   current_note = (current_note + 1) % size;
 }
+
+
 
