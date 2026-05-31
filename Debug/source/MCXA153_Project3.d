@@ -63,7 +63,7 @@ source/MCXA153_Project3.o source/MCXA153_Project3.d: \
  D:\ProgramData\MCUX\MCXA153_Project3\component\uart/fsl_adapter_uart.h \
  ../source/display.h ../source/gfx.h ../source/keypad.h \
  ../source/boot_anim.h ../source/buzzer.h ../source/tetris/src/tetris.h \
- ../source/tetris/src/tetronimo.h
+ ../source/tetris/src/tetronimo.h ../source/botton.h
 D:\ProgramData\MCUX\MCXA153_Project3\device/fsl_device_registers.h:
 D:\ProgramData\MCUX\MCXA153_Project3\device/MCXA153.h:
 D:\ProgramData\MCUX\MCXA153_Project3\device\periph/PERI_ADC.h:
@@ -132,3 +132,4 @@ D:\ProgramData\MCUX\MCXA153_Project3\component\uart/fsl_adapter_uart.h:
 ../source/buzzer.h:
 ../source/tetris/src/tetris.h:
 ../source/tetris/src/tetronimo.h:
+../source/botton.h:

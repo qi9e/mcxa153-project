@@ -6,6 +6,7 @@
 C_SRCS += \
 ../source/MCXA153_Project3.c \
 ../source/boot_anim.c \
+../source/botton.c \
 ../source/buzzer.c \
 ../source/display.c \
 ../source/game.c \
@@ -17,6 +18,7 @@ C_SRCS += \
 C_DEPS += \
 ./source/MCXA153_Project3.d \
 ./source/boot_anim.d \
+./source/botton.d \
 ./source/buzzer.d \
 ./source/display.d \
 ./source/game.d \
@@ -28,6 +30,7 @@ C_DEPS += \
 OBJS += \
 ./source/MCXA153_Project3.o \
 ./source/boot_anim.o \
+./source/botton.o \
 ./source/buzzer.o \
 ./source/display.o \
 ./source/game.o \
@@ -49,7 +52,7 @@ source/%.o: ../source/%.c source/subdir.mk
 clean: clean-source
 
 clean-source:
-	-$(RM) ./source/MCXA153_Project3.d ./source/MCXA153_Project3.o ./source/boot_anim.d ./source/boot_anim.o ./source/buzzer.d ./source/buzzer.o ./source/display.d ./source/display.o ./source/game.d ./source/game.o ./source/gfx.d ./source/gfx.o ./source/keypad.d ./source/keypad.o ./source/semihost_hardfault.d ./source/semihost_hardfault.o ./source/systemUI.d ./source/systemUI.o
+	-$(RM) ./source/MCXA153_Project3.d ./source/MCXA153_Project3.o ./source/boot_anim.d ./source/boot_anim.o ./source/botton.d ./source/botton.o ./source/buzzer.d ./source/buzzer.o ./source/display.d ./source/display.o ./source/game.d ./source/game.o ./source/gfx.d ./source/gfx.o ./source/keypad.d ./source/keypad.o ./source/semihost_hardfault.d ./source/semihost_hardfault.o ./source/systemUI.d ./source/systemUI.o
 
 .PHONY: clean-source
 

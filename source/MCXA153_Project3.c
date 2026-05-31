@@ -11,6 +11,7 @@
 #include "buzzer.h"
 #include "tetris/src/tetris.h"
 #include "tetris/src/tetronimo.h"
+#include "botton.h"
 
 #define SCAN_PERIOD_MS 5U
 
@@ -57,6 +58,7 @@ int main(void)
     buzzer_init();
     GFX_Init();
     KEYPAD_Init();
+    Button_Init();
     SysTick_Config(SystemCoreClock / 200);
 
     GFX_Clear(0);
@@ -64,12 +66,29 @@ int main(void)
 
     tetris_init();
 
+    bool paused = false;
+
+
     while(1){
         char input = KEYPAD_GetKey();
+
+        if (Button_Pressed())
+        {
+            GFX_Clear(0);
+            GFX_DrawString(20, 70, "PAUSED", 3, 0, 2);
+            GFX_DrawString(10, 100, "Press btn to resume", 2, 0, 1);
+            GFX_Flush();
+
+            while (!Button_Pressed())
+            {
+            	__WFI();
+            }
+        }
 
         GFX_Clear(0);
         tetris_update(0);
         GFX_Flush();
+
 
         if (input != KEYPAD_NO_KEY) {
             tetris_input(input);
