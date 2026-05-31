@@ -1,5 +1,0 @@
-D:\ProgramData\MCUX\MCXA153_Project3\CMSIS/core_cm33.h:2555:22:__NVIC_SetPriority	16	static
-D:\ProgramData\MCUX\MCXA153_Project3\CMSIS/core_cm33.h:3108:26:SysTick_Config	16	static
-../source/MCXA153_Project3.c:21:6:SysTick_Handler	8	static
-../source/MCXA153_Project3.c:27:13:draw_screen	24	static
-../source/MCXA153_Project3.c:50:5:main	16	static
