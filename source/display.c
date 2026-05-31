@@ -13,10 +13,10 @@
 #define PIN_DC_NUM    6U
 
 
-#define DISPLAY_SPI            LPSPI1                            /* 原 LPSPI0 */
-#define DISPLAY_SPI_CLK_FREQ   CLOCK_GetLpspiClkFreq(1U)         /* 原 0U */
+#define DISPLAY_SPI            LPSPI1                           
+#define DISPLAY_SPI_CLK_FREQ   CLOCK_GetLpspiClkFreq(1U)        
 
-#define DISPLAY_SPI_BAUDRATE   6000000U   /* 6 MHz, 12MHz/2 */
+#define DISPLAY_SPI_BAUDRATE   6000000U   
 
 #define CS_LOW()   GPIO_PinWrite(PIN_CS_GPIO,  PIN_CS_NUM, 0)
 #define CS_HIGH()  GPIO_PinWrite(PIN_CS_GPIO,  PIN_CS_NUM, 1)
@@ -279,7 +279,7 @@ void Display_DrawString(uint16_t x, uint16_t y, const char *s, uint16_t fg, uint
     while (*s) {
         Display_DrawChar(x, y, *s++, fg, bg);
         x += 6;
-        /* 超出屏宽不画 */
+
         if (x + 6 > ST7735_WIDTH) break;
     }
 }
@@ -293,7 +293,7 @@ void Display_BlitRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h,
 
     set_addr_window(x, y, x + w - 1, y + h - 1);
     DC_DATA(); CS_LOW();
-    /* RGB565 是大端在 ST7735 上：先发高字节。我们用一个临时行缓冲做字节序转换 */
+   
     static uint8_t line[ST7735_WIDTH * 2];
     for (uint32_t r = 0; r < h; r++) {
         for (uint32_t i = 0; i < w; i++) {

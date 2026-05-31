@@ -22,7 +22,6 @@ static void delay_anim(uint32_t t)
     }
 }
 
-/* 圆轨迹查表，不用 math.h */
 static const int8_t cx_tbl[32] = {
      30, 29, 28, 25, 21, 17, 11,  6,
       0, -6,-11,-17,-21,-25,-28,-29,
@@ -46,7 +45,7 @@ void BootAnimation_Run(void)
         COL_RED, COL_GREEN, COL_BLUE, COL_YELLOW
     };
 
-    /* 不同轨迹*/
+
     const int orbit_cx[4] = {
         center_x - 35,
         center_x + 35,
@@ -116,7 +115,7 @@ void BootAnimation_Run(void)
     buzzer_silent();
     delay_anim(15);
 
-    /* 3) Welcome 结束画面: 高音 C6 余韵, 然后静音 */
+
     for (int pulse = 0; pulse < 20; pulse++) {
     	if (pulse % 2 == 0)
     	{
@@ -145,7 +144,7 @@ void BootAnimation_Run(void)
         delay_anim(10);
     }
 
-    /* 3) Welcome 结束画面 */
+
     GFX_Clear(COL_BG);
 
     GFX_FillCircle(center_x - 10, center_y - 10, 6, COL_RED);
@@ -158,7 +157,7 @@ void BootAnimation_Run(void)
 
     GFX_Flush();
 
-    /* 停顿 */
+
     delay_anim(60);
     buzzer_silent();
 }

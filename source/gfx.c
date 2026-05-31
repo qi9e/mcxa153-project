@@ -235,12 +235,12 @@ void GFX_DrawChar(int x, int y, char ch, gfx_color_t fg, gfx_color_t bg, uint8_t
 {
     if (size == 0) size = 1;
     const uint8_t *g = &glcd_font[(uint8_t)ch * 5];
-    /* 5 列 + 1 空列 = 6 列；每列 8 位 */
+    
     for (int col = 0; col < 6; col++) {
         uint8_t bits = (col < 5) ? g[col] : 0x00;
         for (int row = 0; row < 8; row++) {
             gfx_color_t c = (bits & (1 << row)) ? fg : bg;
-            if (c == 0xFF) continue;          /* 让 bg=0xFF 表示透明背景 */
+            if (c == 0xFF) continue;         
             if (size == 1) {
                 GFX_SetPixel(x + col, y + row, c);
             } else {
