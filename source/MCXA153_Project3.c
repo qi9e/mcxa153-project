@@ -66,9 +66,6 @@ int main(void)
 
     tetris_init();
 
-    bool paused = false;
-
-
     while(1){
         char input = KEYPAD_GetKey();
 
@@ -78,6 +75,7 @@ int main(void)
             GFX_DrawString(20, 70, "PAUSED", 3, 0, 2);
             GFX_DrawString(10, 100, "Press btn to resume", 2, 0, 1);
             GFX_Flush();
+            play_note(0, 0);
 
             while (!Button_Pressed())
             {

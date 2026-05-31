@@ -5,6 +5,7 @@
 #include "gfx.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "music.h"
 
@@ -51,16 +52,16 @@ static int tetris_remove_full_row(int y) {
 }
 
 static void tetris_draw() {
-	/*
+
 	 int __x = (1 * RECT_WIDTH);
 	 int __y = (0 * RECT_HEIGHT);
 	 int __w = (RECT_WIDTH*WIDTH);
 	 int __h = (RECT_HEIGHT*HEIGHT);
 	 gfx_color_t c = 11;
-	 GFX_FillRect(__x, __y, __w, __h, c); */
+	 GFX_FillRect(__x, __y, __w, __h, c);
 
-	int __x, __y, __w, __h;
-	gfx_color_t c;
+	//int __x, __y, __w, __h;
+	//gfx_color_t c;
 
 	for (int y = 0; y < HEIGHT; y++) {
 		for (int x = 0; x < WIDTH; x++) {
@@ -91,6 +92,7 @@ static void tetris_draw() {
 			}
 		}
 	}
+
 }
 
 static bool check_collision() {
@@ -205,30 +207,50 @@ int level = 1;
 unsigned int last_music = 0;
 
 bool tetris_input(char input) {
-	if (input == '1') {
+	if (input == '5') {
 		falling_rotate();
 	}
-	if (input == '2') {
+	if (input == '8') {
 		last_time = current_time;
 		points += tetris_tick() * level;
 	}
-	if (input == '3') {
+	if (input == '4') {
 		falling_move(-1);
 	}
-	if (input == '4') {
+	if (input == '6') {
 		falling_move(1);
 	}
 }
 const int INPUT_DEBOUNCE = 10;
 
+
+
 bool tetris_update(char input) {
 
     tetris_draw();
 	current_time = nframes;
-	if (current_time - last_time > 5 ||input) {
+	if (current_time - last_time >= 2) {
 		last_time = current_time;
 		points += tetris_tick() * level;
 	}
+	char p[8];
+	snprintf(p, sizeof(p), "%d", points);
+	char buf[8];
+
+	GFX_DrawVLine(89, 0, 160, 2);
+
+	GFX_DrawString(93, 4, "SCORE", 2, 0, 1);
+	snprintf(buf, sizeof buf, "%d", points);
+	GFX_DrawString(93, 14, buf, 7, 0, 1);
+
+	GFX_DrawString(93, 34, "LEVEL", 2, 0, 1);
+	snprintf(buf, sizeof buf, "%d", level);
+	GFX_DrawString(93, 44, buf, 5, 0, 1);
+
+	GFX_DrawString(93, 130, "5:ROT", 2, 0, 1);
+	GFX_DrawString(93, 140, "4< >6", 2, 0, 1);
+	GFX_DrawString(93, 150, "8:DWN", 2, 0, 1);
+
 	begin_next_note();
 	nframes++;
 }

@@ -1,5 +1,7 @@
 #include "tetronimo.h"
 // pieces[id][rotation][row][column]
+
+
 u8 pieces[7][4][4][4] = {
   // I
   {
