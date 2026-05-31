@@ -1,10 +1,3 @@
-/*
- * botton.c
- *
- *  Created on: 2026年5月31日
- *      Author: dani
- */
-
 #include "botton.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
@@ -17,7 +10,6 @@ void Button_Init(void)
     CLOCK_EnableClock(kCLOCK_GatePORT1);
     CLOCK_EnableClock(kCLOCK_GateGPIO1);
 
-    // 引脚配置：GPIO 模式 + 上拉 + 输入使能
     port_pin_config_t pin_cfg = {
         .pullSelect          = kPORT_PullUp,
         .driveStrength       = kPORT_LowDriveStrength,
@@ -36,10 +28,8 @@ void Button_Init(void)
     };
     GPIO_PinInit(HOME_BTN_GPIO, HOME_BTN_PIN, &gpio_cfg);
 
-    // MCXA153 用 GPIO 模块配置中断，不是 PORT 模块
     GPIO_SetPinInterruptConfig(HOME_BTN_GPIO, HOME_BTN_PIN, kGPIO_InterruptFallingEdge);
 
-    // 清挂起 + 使能 NVIC
     GPIO_PortClearInterruptFlags(HOME_BTN_GPIO, 1U << HOME_BTN_PIN);
     EnableIRQ(HOME_BTN_IRQn);
 }
@@ -53,7 +43,6 @@ bool Button_Pressed(void)
     return false;
 }
 
-// 中断处理
 void GPIO1_IRQHandler(void)
 {
     uint32_t flags = GPIO_PortGetInterruptFlags(HOME_BTN_GPIO);

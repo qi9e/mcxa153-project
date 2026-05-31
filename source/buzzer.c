@@ -1,10 +1,3 @@
-/*
- * buzzer.c
- *
- *  Created on: 2026年5月23日
- *      Author: dani
- */
-
 #include "buzzer.h"
 #include "fsl_ctimer.h"
 #include "fsl_clock.h"
@@ -12,7 +5,7 @@
 #include "fsl_common.h"
 
 #define BUZZER_CTIMER      CTIMER1
-#define BUZZER_OUT_CH      kCTIMER_Match_2   /* P3_12 = CT1_MAT2 */
+#define BUZZER_OUT_CH      kCTIMER_Match_2  
 
 #define BUZZER_CTIMER_CLK_HZ  CLOCK_GetCTimerClkFreq(1U)
 
@@ -23,18 +16,14 @@ static void delay_ms(uint32_t ms)
 
 void buzzer_init(void)
 {
-    /* 选时钟，开reset的 */
     CLOCK_SetClockDiv(kCLOCK_DivCTIMER1, 1U);
     CLOCK_AttachClk(kFRO12M_to_CTIMER1);
     CLOCK_EnableClock(kCLOCK_GateCTIMER1);
     RESET_ReleasePeripheralReset(kCTIMER1_RST_SHIFT_RSTn);
 
-    /* 初始化 CTIMER */
     ctimer_config_t cfg;
     CTIMER_GetDefaultConfig(&cfg);
     CTIMER_Init(BUZZER_CTIMER, &cfg);
-
-    /* 这个版本修改，no callback， no cpu interrupt */
 }
 
 void buzzer_silent(void)
@@ -56,27 +45,16 @@ void buzzer_tone_set(uint32_t freq_hz)
 
     uint32_t clk_hz = BUZZER_CTIMER_CLK_HZ;
 
-    /*
-     * CTIMER_SetupPw:
-     *   MR3 = clk / freq - 1          
-     *   MR2 = MR3 * (100 - duty) / 100 
-     *   MCR: MR3  reset counter
-     *   EMR: MR2  set, MR3  clear -> 50% 
-     *
-
-     */
     CTIMER_SetupPwm(BUZZER_CTIMER,
-                    kCTIMER_Match_3,    /* pwmPeriodChannel:*/
-                    BUZZER_OUT_CH,      /* matchChannel:  */
-                    50U,                /* 50% */
+                    kCTIMER_Match_3,
+                    BUZZER_OUT_CH,
+                    50U,
                     freq_hz,
                     clk_hz,
-                    false);             /* 不需要中断 */
+                    false);
 
     CTIMER_StartTimer(BUZZER_CTIMER);
 }
-
-//这里api no change
 
 void play_note(uint32_t freq_hz, float beats)
 {

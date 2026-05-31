@@ -1,10 +1,3 @@
-/*
- * boot_anim.h
- *
- *  Created on: 2026年5月18日
- *      Author: dani
- */
-
 #ifndef BOOT_ANIM_H_
 #define BOOT_ANIM_H_
 

@@ -1,10 +1,3 @@
-/*
- * keypad.c
- *
- *  Created on: 2026年4月31日
- *      Author: dani
- */
-
 #ifndef KEYPAD_H_
 #define KEYPAD_H_
 

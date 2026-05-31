@@ -1,10 +1,3 @@
-/*
- * keypad.c
- *
- *  Created on: 2026年4月31日
- *      Author: dani
- */
-
 #include "keypad.h"
 #include "fsl_common.h"
 #include "fsl_gpio.h"
@@ -12,7 +5,6 @@
 #include "fsl_clock.h"
 #include "fsl_reset.h"
 
-/* ---------- 引脚定义 ---------- */
 #define ROW0_PORT   PORT1
 #define ROW0_GPIO   GPIO1
 #define ROW0_PIN    10U   /* t1 -> P1_10 */
@@ -45,7 +37,6 @@
 #define COL3_GPIO   GPIO1
 #define COL3_PIN    11U   /* ti4 -> P1_11 */
 
-/* ---------- 键位映射 ---------- */
 static const char key_map[4][4] = {
     {'1', '2', '3', 'A'},
     {'4', '5', '6', 'B'},
@@ -53,7 +44,6 @@ static const char key_map[4][4] = {
     {'*', '0', '#', 'D'},
 };
 
-/* ---------- 内部状态 ---------- */
 static uint8_t row_now[4]    = {0};
 static uint8_t row_prev[4]   = {0};
 static uint8_t row_stable[4] = {0};
@@ -79,7 +69,6 @@ static const pin_def_t col_pins[4] = {
     {COL3_PORT, COL3_GPIO, COL3_PIN},
 };
 
-/* ---------- 初始化 ---------- */
 void KEYPAD_Init(void)
 {
 	// cometar todos los reset
@@ -90,7 +79,7 @@ void KEYPAD_Init(void)
     CLOCK_EnableClock(kCLOCK_GateGPIO1);
     //CLOCK_EnableClock(kCLOCK_GateGPIO2);
     //CLOCK_EnableClock(kCLOCK_GateGPIO3);
-    /* MCXA153 必须先释放外设 reset, 否则写寄存器触发 BusFault */
+
 	//RESET_PeripheralReset(kPORT1_RST_SHIFT_RSTn);
 	//RESET_PeripheralReset(kPORT2_RST_SHIFT_RSTn);
 	//RESET_PeripheralReset(kPORT3_RST_SHIFT_RSTn);
@@ -98,7 +87,6 @@ void KEYPAD_Init(void)
 	//RESET_PeripheralReset(kGPIO2_RST_SHIFT_RSTn);
 	//RESET_PeripheralReset(kGPIO3_RST_SHIFT_RSTn);
 
-    /* 行: 推挽输出, 默认高 */
     const port_pin_config_t row_pin_cfg = {
         .pullSelect          = kPORT_PullDisable,
         .driveStrength       = kPORT_LowDriveStrength,
@@ -119,7 +107,6 @@ void KEYPAD_Init(void)
         GPIO_PinInit(row_pins[i].gpio, row_pins[i].pin, &row_gpio_cfg);
     }
 
-    /* 列: 输入 + 上拉 */
     const port_pin_config_t col_pin_cfg = {
         .pullSelect          = kPORT_PullUp,
         .driveStrength       = kPORT_LowDriveStrength,
@@ -146,7 +133,6 @@ void KEYPAD_Init(void)
     key_buf = KEYPAD_NO_KEY;
 }
 
-/* ---------- 扫描 ---------- */
 void KEYPAD_Scan(void)
 {
     for (int r = 0; r < 4; r++) {
@@ -189,7 +175,6 @@ void KEYPAD_Scan(void)
     }
 }
 
-/* ---------- 取键 ---------- */
 char KEYPAD_GetKey(void)
 {
     char k = key_buf;

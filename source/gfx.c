@@ -2,11 +2,8 @@
 #include "display.h"
 #include <string.h>
 
-/* ====== Framebuffer & palette ====== */
 uint8_t gfx_fb[GFX_FB_SIZE];
 
-/* 默认 16 色调色板 (RGB565)。索引 0 = 黑（背景）。
- * GameBoy 4 阶灰 + 标准 12 色，可按需修改 */
 #define RGB565(r,g,b) ((uint16_t)(((r)&0xF8)<<8 | ((g)&0xFC)<<3 | ((b)&0xF8)>>3))
 
 uint16_t gfx_palette[16] = {
@@ -33,10 +30,6 @@ void GFX_Init(void)
     memset(gfx_fb, 0, sizeof gfx_fb);
 }
 
-/* ====== 像素层 ======
- * 打包方式：高 nibble = 偶数 x (左)，低 nibble = 奇数 x (右)
- * byte_idx = y * (W/2) + x/2
- */
 static inline int fb_idx(int x, int y) { return y * (GFX_W / 2) + (x >> 1); }
 
 void GFX_SetPixel(int x, int y, gfx_color_t c)
@@ -60,14 +53,12 @@ void GFX_Clear(gfx_color_t c)
     memset(gfx_fb, b, sizeof gfx_fb);
 }
 
-/* ====== 矩形 / 线 ====== */
 void GFX_DrawHLine(int x, int y, int w, gfx_color_t c)
 {
     if ((unsigned)y >= GFX_HEIGHT) return;
     if (x < 0) { w += x; x = 0; }
     if (x + w > GFX_W) w = GFX_W - x;
     if (w <= 0) return;
-    /* 简单：逐像素。优化空间是按 byte 批量填，留给后面 */
     for (int i = 0; i < w; i++) GFX_SetPixel(x + i, y, c);
 }
 
@@ -100,7 +91,6 @@ void GFX_DrawRect(int x, int y, int w, int h, gfx_color_t c)
     GFX_DrawVLine(x + w - 1, y, h, c);
 }
 
-/* Bresenham */
 void GFX_DrawLine(int x0, int y0, int x1, int y1, gfx_color_t c)
 {
     int dx = x1 - x0, dy = y1 - y0;
@@ -118,7 +108,6 @@ void GFX_DrawLine(int x0, int y0, int x1, int y1, gfx_color_t c)
     }
 }
 
-/* 中点圆 */
 void GFX_DrawCircle(int cx, int cy, int r, gfx_color_t c)
 {
     int x = r, y = 0;
@@ -153,8 +142,6 @@ void GFX_FillCircle(int cx, int cy, int r, gfx_color_t c)
     }
 }
 
-/* ====== Adafruit 5x7 字体 (glcdfont.c, CP437) ====== */
-/* 每个 char 5 字节，每字节是一列 (bit0=顶, bit6=底)。共 256 字符。 */
 static const uint8_t glcd_font[] = {
     0x00,0x00,0x00,0x00,0x00, 0x3E,0x5B,0x4F,0x5B,0x3E, 0x3E,0x6B,0x4F,0x6B,0x3E,
     0x1C,0x3E,0x7C,0x3E,0x1C, 0x18,0x3C,0x7E,0x3C,0x18, 0x1C,0x57,0x7D,0x57,0x1C,
@@ -275,7 +262,6 @@ void GFX_DrawString(int x, int y, const char *s, gfx_color_t fg, gfx_color_t bg,
     }
 }
 
-/* Sprite: 4bpp 打包，高 nibble = 左像素 */
 void GFX_DrawSprite(int x, int y, int w, int h, const uint8_t *data,
                     gfx_color_t transparent)
 {
@@ -290,9 +276,6 @@ void GFX_DrawSprite(int x, int y, int w, int h, const uint8_t *data,
     }
 }
 
-/* ====== Flush ======
- * 按行展开 4bpp -> RGB565，调 display 层一次发一行
- */
 void GFX_Flush(void)
 {
 	static uint16_t line[GFX_W];

@@ -3,7 +3,6 @@
 #include "fsl_gpio.h"
 #include "fsl_lpspi.h"
 
-/* ============== 引脚（GPIO 部分） ============== */
 #define PIN_CS_GPIO   GPIO3
 #define PIN_CS_NUM    15U
 
@@ -13,14 +12,12 @@
 #define PIN_DC_GPIO   GPIO2
 #define PIN_DC_NUM    6U
 
-/* ============== SPI 配置 ============== */
 
 #define DISPLAY_SPI            LPSPI1                            /* 原 LPSPI0 */
 #define DISPLAY_SPI_CLK_FREQ   CLOCK_GetLpspiClkFreq(1U)         /* 原 0U */
 
 #define DISPLAY_SPI_BAUDRATE   6000000U   /* 6 MHz, 12MHz/2 */
 
-/* ============== 引脚操作宏 ============== */
 #define CS_LOW()   GPIO_PinWrite(PIN_CS_GPIO,  PIN_CS_NUM, 0)
 #define CS_HIGH()  GPIO_PinWrite(PIN_CS_GPIO,  PIN_CS_NUM, 1)
 #define RST_LOW()  GPIO_PinWrite(PIN_RST_GPIO, PIN_RST_NUM, 0)
@@ -28,7 +25,6 @@
 #define DC_CMD()   GPIO_PinWrite(PIN_DC_GPIO,  PIN_DC_NUM, 0)
 #define DC_DATA()  GPIO_PinWrite(PIN_DC_GPIO,  PIN_DC_NUM, 1)
 
-/* ============== ST7735 命令 ============== */
 #define ST7735_SWRESET 0x01
 #define ST7735_SLPOUT  0x11
 #define ST7735_DISPON  0x29
@@ -45,24 +41,18 @@
 #define ST7735_GMCTRP1 0xE0
 #define ST7735_GMCTRN1 0xE1
 
-/* ============== 粗略延时 ============== */
 static void delay_ms(uint32_t ms)
 {
     volatile uint32_t i;
     for (; ms > 0; ms--) for (i = 0; i < 12000; i++) __NOP();
 }
 
-/* ============== LPSPI 单字节阻塞发送 ==============
- * 直接用 LPSPI 寄存器操作，最快且不依赖 transfer handle。
- * 我们不用硬件 PCS——CS 由 GPIO 控制，所以这里 TCR 里的 PCS 字段随便选。
- */
 static void spi_write_buf(const uint8_t *buf, uint32_t len)
 {
     lpspi_transfer_t xfer = {0};
     xfer.txData      = (uint8_t *)buf;
     xfer.rxData      = NULL;
     xfer.dataSize    = len;
-    /* 只用 PCS0 选择, 不要 Continuous flag */
     xfer.configFlags = kLPSPI_MasterPcs0;
     LPSPI_MasterTransferBlocking(DISPLAY_SPI, &xfer);
 }
@@ -107,10 +97,6 @@ static void set_addr_window(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
     write_cmd(ST7735_RAMWR);
 }
 
-/* ============== GPIO 初始化（CS/RST/DC） ==============
- * 注意：PORT 复用 (kPORT_MuxAlt0 = GPIO) 假设由 BOARD_InitPins() 在 Config Tools
- * 生成的代码中完成。这里只做 GPIO 方向设置和初始电平。
- */
 static void gpio_init(void)
 {
     CLOCK_EnableClock(kCLOCK_GateGPIO2);
@@ -123,17 +109,15 @@ static void gpio_init(void)
     GPIO_PinInit(GPIO3, 14U, &out_high);
     //GPIO_PinInit(GPIO2,  6U, &out_high);
 }
-/* ============== LPSPI 初始化 ============== */
+
 static void spi_init(void)
 {
-    /* 开 LPSPI1 时钟门 */
-    CLOCK_EnableClock(kCLOCK_GateLPSPI1);                        /* 原 kCLOCK_GateLPSPI0 */
+    CLOCK_EnableClock(kCLOCK_GateLPSPI1);                      
 
-    /* 释放 LPSPI1 复位 */
-    RESET_ReleasePeripheralReset(kLPSPI1_RST_SHIFT_RSTn);        /* 新增, 重要！*/
+    RESET_ReleasePeripheralReset(kLPSPI1_RST_SHIFT_RSTn);
 
-    CLOCK_SetClockDiv(kCLOCK_DivLPSPI1, 1U);                     /* 原 DivLPSPI0 */
-    CLOCK_AttachClk(kFRO12M_to_LPSPI1);                          /* 原 _to_LPSPI0 */
+    CLOCK_SetClockDiv(kCLOCK_DivLPSPI1, 1U);
+    CLOCK_AttachClk(kFRO12M_to_LPSPI1);
 
     lpspi_master_config_t cfg;
     LPSPI_MasterGetDefaultConfig(&cfg);
@@ -148,7 +132,6 @@ static void spi_init(void)
     LPSPI_MasterInit(DISPLAY_SPI, &cfg, DISPLAY_SPI_CLK_FREQ);
 }
 
-/* ============== ST7735 初始化序列 ============== */
 static void st7735_init_seq(void)
 {
 	RST_HIGH(); delay_ms(50);
@@ -185,7 +168,6 @@ static void st7735_init_seq(void)
     write_cmd(ST7735_DISPON);  delay_ms(100);
 }
 
-/* ============== 公共 API ============== */
 void Display_Init(void)
 {
 	gpio_init();
@@ -201,7 +183,6 @@ void Display_FillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t c
 
     set_addr_window(x, y, x + w - 1, y + h - 1);
 
-    /* 单行 buffer */
     uint8_t row[ST7735_WIDTH * 2];
     uint8_t hi = color >> 8, lo = color & 0xFF;
     for (uint32_t i = 0; i < w; i++) {
@@ -229,10 +210,6 @@ void Display_DrawPixel(uint16_t x, uint16_t y, uint16_t color)
     write_data_buf(d, 2);
 }
 
-/* ============== 极简字体 5x7 ==============
- * 仅覆盖键盘需要的字符: 0-9, A-F, *, #, 空格
- * 每个字符 5 列, 每列一个字节, 低 7 位代表 7 行像素 (bit0 = 顶, bit6 = 底).
- */
 typedef struct { char c; uint8_t cols[5]; } font_glyph_t;
 
 static const font_glyph_t g_font[] = {
@@ -261,7 +238,6 @@ static const font_glyph_t g_font[] = {
 };
 #define FONT_COUNT (sizeof(g_font) / sizeof(g_font[0]))
 
-/* 字符渲染: 一次 SPI 传输一个 char block, 比逐像素快得多 */
 void Display_DrawChar(uint16_t x, uint16_t y, char c, uint16_t fg, uint16_t bg)
 {
     /* 查表 */
@@ -271,8 +247,6 @@ void Display_DrawChar(uint16_t x, uint16_t y, char c, uint16_t fg, uint16_t bg)
     }
     if (cols == NULL) cols = g_font[0].cols;  /* 没找到 → 空格 */
 
-    /* 字符占 6x8 像素 (5 列字 + 1 列间距, 7 行字 + 1 行间距).
-       构造 buffer 一次发出. 6x8 = 48 像素 = 96 字节. */
     uint8_t buf[6 * 8 * 2];
     uint8_t hi_fg = fg >> 8, lo_fg = fg & 0xFF;
     uint8_t hi_bg = bg >> 8, lo_bg = bg & 0xFF;
